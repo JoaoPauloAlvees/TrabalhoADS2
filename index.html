@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Doação de Rações - ONG</title>
+  <title>Tema segundo periodo</title>
   
   <!-- Importando a biblioteca do Supabase via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -44,6 +44,7 @@
         border-bottom: 1px solid rgba(72, 190, 26, 0.1);
     }
 
+    /* BLOCO PRINCIPAL FLEXBOX */
     .bloco-conteudo {
         display: flex;
         flex-direction: row;
@@ -61,6 +62,7 @@
         flex-shrink: 0;
     }
 
+    /* --- ESTILOS DA GALERIA AUTOMÁTICA --- */
     .galeria-container {
         position: relative;
         width: 100%;
@@ -138,6 +140,7 @@
         font-size: 2.2rem;
     }
 
+    /* ESTILOS DO FORMULÁRIO E TABELA DE DOAÇÃO */
     .container-doacao {
         display: flex;
         flex-wrap: wrap;
@@ -248,35 +251,56 @@
     <!-- SEÇÃO PRINCIPAL -->
     <section id="inicio">
         <div class="bloco-conteudo">
+            
+            <!-- COLUNA DA ESQUERDA: GALERIA + TEXTO ABAIXO DELA -->
             <div class="coluna-esquerda">
+                
                 <div class="galeria-container">
                     <div class="galeria-slides" id="trilhoSlides">
                         <img src="01.jpeg" alt="Resgate e Cuidados 1">
                         <img src="02.jpeg" alt="Resgate e Cuidados 2">
                         <img src="03.jpeg" alt="Resgate e Cuidados 3">
                     </div>
+
                     <button class="btn-galeria btn-prev" onclick="mudarSlide(-1)">&#10094;</button>
                     <button class="btn-galeria btn-next" onclick="mudarSlide(1)">&#10095;</button>
                 </div>
+
                 <div class="texto-abaixo-galeria">
-                    <p><strong>História Marcante de Superação:</strong> A cachorrinha "Orelhuda" foi encontrada magra e debilitada perto de uma pista...</p>
+                    <p><strong>História Marcante de Superação:</strong> A cachorrinha "Orelhuda" foi encontrada magra e debilitada perto de uma pista. Após ser resgatada, tratada de TVT e doença do carrapato, ela foi castrada, vacinada e adotada por uma família maravilhosa!</p>
                 </div>
+
             </div>
 
+            <!-- COLUNA DA DIREITA: TEXTO INTEGRAL ORIGINAL -->
             <div class="texto-lado"> 
-                <div class="nome-principal">
+                <div class="nome-principal" id="nome-principal">
                     <h1>Doação de Rações &#128062;</h1>
                 </div>
-                <p><strong>Nossa História de Luta:</strong> Há 20 anos dedicamos nossa vida ao resgate e proteção animal em Nova Iguaçu.</p>
+                <p><strong>Nossa História de Luta:</strong> Há 20 anos dedicamos nossa vida ao resgate e proteção animal em Nova Iguaçu. Tudo começou com o resgate de uma cachorrinha com sarna severa no trabalho.</p>
+                <p>Há 20 anos, a nossa fundadora atua na causa animal em Nova Iguaçu. Tudo começou de forma inesperada: trabalhando no Detran, ela se deparou com uma cachorrinha em estado crítico — magra, sem pelos, sofrendo de sarna e com infecções graves. Era dezembro, o órgão entraria em recesso e ela ficou angustiada pensando em quem cuidaria daquele animal. Seu marido então disparou: 'Leva ela, você cuida e depois vê o que faz'. Foi o pontapé inicial de uma vida inteira dedicada ao resgate.
+
+O que era um resgate pontual virou missão de vida. Começou a acolher mais um, e mais um, até que a casa em apartamento ficou pequena e foi preciso estruturar um espaço adequado. Hoje, mantemos um abrigo no bairro Caonze (além do suporte na residência principal), acolhendo cerca de 40 animais entre cães resgatados das ruas, casos de abandono e reabilitação.
+
+Cada animal que chega traz uma história de superação. Como a da nossa inesquecível 'Orelhuda' (ou Dumbo): encontrada magrinha revirando lixo perto de uma pista movimentada, assustada e com diversas doenças graves — incluindo TVT (tumor venéreo transmissível) e doença do carrapato. Após muito tratamento, carinho, castração e vacinação, ela se recuperou, participou de feiras de adoção com direito a roupinha nova e hoje vive feliz com uma família maravilhosa, viajando para a praia e recebendo todo o amor que merecia. É por histórias como essa que nunca paramos.
+</p>
             </div>
+
         </div>
     </section>
 
-    <!-- SEÇÃO DE DOAÇÃO COM SUPORTE A CRUD COMPLETO (3 TABELAS) -->
+    <!-- SEÇÃO DE DOAÇÃO INTEGRADA ÀS 3 TABELAS COM CRUD COMPLETO -->
     <section id="doacao">
         <h2>Faça sua doação</h2>
-        <p>Manter um abrigo com dezenas de animais resgatados exige muito esforço diário. Escolha abaixo um ponto de coleta parceiro e registre sua contribuição!</p>
+        <p>Manter um abrigo com dezenas de animais resgatados exige muito esforço diário, e toda ajuda é bem-vinda para garantir o bem-estar deles!</p>
         
+        <h3>Como você pode ajudar:</h3>
+        <ul>
+            <li><strong>Ração:</strong> Aceitamos qualquer tipo de ração! Seja a ração de combate (mais em conta) ou rações de melhor qualidade.</li>
+            <li><strong>Medicamentos e Vacinas:</strong> Cerca de 90% dos animais chegam com doença do carrapato. Precisamos muito de remédios como <em>Doxitrat</em> e <em>Hemolitan</em>, além de vacinas essenciais (V10/polivalente).</li>
+            <li><strong>Itens de Limpeza e Higiene:</strong> Gasta-se muito material de limpeza e xampus para manter o ambiente limpo e desinfetado.</li>
+        </ul>
+
         <div class="container-doacao">
             <!-- FORMULÁRIO DE CADASTRO (CREATE) -->
             <div class="card-doacao">
@@ -294,7 +318,7 @@
                     <input type="text" id="itemDoado" placeholder="Ex: Saco de Ração Cães 10kg">
                 </div>
                 <div class="form-grupo">
-                    <label for="selectPontoColeta">Selecione o Ponto de Coleta:</label>
+                    <label for="selectPontoColeta">Selecione o Ponto de Coleta / Entrega:</label>
                     <select id="selectPontoColeta">
                         <option value="">Carregando pontos de coleta...</option>
                     </select>
@@ -327,22 +351,32 @@
     <!-- SEÇÃO SOBRE OS ANIMAIS -->
     <section id="animais">
         <h2>Sobre os Animais e Rotina</h2>
-        <p>A rotina no abrigo no Caonze começa bem cedo com a alimentação e higiene dos 40 animais.</p>
+        <p>A rotina no abrigo no Caonze começa bem cedo com a alimentação e higiene dos 40 animais. Todos os filhotes resgatados recebem a primeira dose da vacina, são monitorados e passam pela castração obrigatória aos 6 meses.</p>
     </section>
 
     <!-- SEÇÃO ODS -->
     <section id="ods">
-        <h2>ODS 9, 11 e 12 - Sustentabilidade e Inovação</h2>
-        <p>Este sistema conecta doadores a abrigos locais, promovendo o consumo responsável e a gestão tecnológica de insumos.</p>
+        <h2>ODS 9 - Indústria, Inovação e Infraestrutura</h2>
+        <p>Este aplicativo aplica tecnologia para conectar doadores e protetores, garantindo a gestão sustentável de insumos e saúde pública animal.</p>
     </section>
 
     <!-- SEÇÃO CONTATOS -->
     <section id="contatos">
         <h2>Contatos</h2>
+        
         <h3>Aluno de ADS: João Paulo Alves</h3>
         <a href="https://www.linkedin.com/in/joao-alves-b4067b316/" target="_blank">LinkedIn</a> | 
         <a href="https://github.com/JoaoPauloAlvees" target="_blank">GitHub</a>
         <p>Email: Joao.alvenne@gmail.com</p>
+        <p>Telefone de contato: (21) 98198-4075</p>
+
+        <hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">
+
+        <h3>Aluno de ADS: Fernando Cruz</h3>
+        <a href="https://linkedin.com/in/fernando-cruz-219283363" target="_blank">LinkedIn</a> | 
+        <a href="https://github.com/fernandocruzbjj" target="_blank">GitHub</a>
+        <p>Email: fernandocruzbjj@gmail.com</p>
+        <p>Telefone de contato: (21) 99032-5225</p>
     </section>
 
     <!-- SCRIPT DA GALERIA -->
@@ -351,22 +385,44 @@
         const slides = trilho.querySelectorAll('img');
         let indexAtual = 0;
         const totalSlides = slides.length;
+        let intervaloAuto;
 
         function atualizarCarrossel() {
-            if (indexAtual >= totalSlides) indexAtual = 0;
-            else if (indexAtual < 0) indexAtual = totalSlides - 1;
+            if (indexAtual >= totalSlides) {
+                indexAtual = 0;
+            } else if (indexAtual < 0) {
+                indexAtual = totalSlides - 1;
+            }
             trilho.style.transform = `translateX(-${indexAtual * 100}%)`;
         }
 
         function mudarSlide(direcao) {
             indexAtual += direcao;
             atualizarCarrossel();
+            reiniciarTemporizador();
         }
 
-        setInterval(() => {
-            indexAtual++;
-            atualizarCarrossel();
-        }, 3500);
+        function iniciarAutoplay() {
+            intervaloAuto = setInterval(() => {
+                indexAtual++;
+                atualizarCarrossel();
+            }, 3500);
+        }
+
+        function pararAutoplay() {
+            clearInterval(intervaloAuto);
+        }
+
+        function reiniciarTemporizador() {
+            pararAutoplay();
+            iniciarAutoplay();
+        }
+
+        const container = document.querySelector('.galeria-container');
+        container.addEventListener('mouseenter', pararAutoplay);
+        container.addEventListener('mouseleave', iniciarAutoplay);
+
+        iniciarAutoplay();
     </script>
 
     <!-- SCRIPT DE CONEXÃO COM O SUPABASE E FUNÇÕES DE CRUD -->
@@ -391,7 +447,7 @@
             }
 
             if (data.length === 0) {
-                select.innerHTML = '<option value="">Nenhum ponto cadastrado</option>';
+                select.innerHTML = '<option value="">Nenhum ponto cadastrado no Supabase</option>';
                 return;
             }
 
