@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Tema segundo periodo</title>
+  
+  <!-- Importando a biblioteca do Supabase via CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
   <style>
     html { 
         scroll-behavior: smooth;
@@ -48,17 +52,16 @@
     .bloco-conteudo {
         display: flex;
         flex-direction: row;
-        align-items: flex-start; /* Alinha o topo da galeria com o topo do texto */
+        align-items: flex-start;
         padding: 20px;
         gap: 30px;
         flex-wrap: wrap; 
     }
 
-    /* COLUNA DA ESQUERDA (AGRUPA GALERIA + TEXTO ABAIXO DELA) */
     .coluna-esquerda {
         display: flex;
         flex-direction: column;
-        width: 450px; /* Mesma largura da galeria */
+        width: 450px;
         gap: 15px;
         flex-shrink: 0;
     }
@@ -108,7 +111,6 @@
     .btn-prev { left: 10px; }
     .btn-next { right: 10px; }
 
-    /* TEXTO QUE FICARÁ EMBAIXO DA GALERIA */
     .texto-abaixo-galeria {
         background-color: #ffffff;
         padding: 15px;
@@ -119,7 +121,6 @@
         border-left: 4px solid #E07A5F;
     }
 
-    /* COLUNA DA DIREITA */
     .texto-lado {
         display: flex;
         flex-direction: column;
@@ -147,6 +148,88 @@
         color: #E26D5C;
         font-size: 2.2rem;
     }
+
+    /* ESTILOS DO FORMULÁRIO E TABELA DE DOAÇÃO */
+    .container-doacao {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 25px;
+        margin-top: 25px;
+    }
+
+    .card-doacao {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .form-grupo {
+        margin-bottom: 15px;
+    }
+
+    .form-grupo label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #2B2D42;
+    }
+
+    .form-grupo input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+        font-size: 0.95rem;
+    }
+
+    .btn-enviar {
+        background-color: #E07A5F;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 6px;
+        cursor: pointer;
+        width: 100%;
+        transition: background 0.3s;
+    }
+
+    .btn-enviar:hover {
+        background-color: #d06448;
+    }
+
+    /* Estilo da Tabela Dinâmica */
+    .tabela-doacoes {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+    }
+
+    .tabela-doacoes th, .tabela-doacoes td {
+        padding: 10px 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .tabela-doacoes th {
+        background-color: #81B29A;
+        color: white;
+        border-radius: 4px 4px 0 0;
+    }
+
+    .badge-status {
+        background-color: #f39c12;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
   </style>
 </head>
 <body>
@@ -166,7 +249,6 @@
             <!-- COLUNA DA ESQUERDA: GALERIA + TEXTO ABAIXO DELA -->
             <div class="coluna-esquerda">
                 
-                <!-- ESTRUTURA DA GALERIA -->
                 <div class="galeria-container">
                     <div class="galeria-slides" id="trilhoSlides">
                         <img src="01.jpeg" alt="Resgate e Cuidados 1">
@@ -178,7 +260,6 @@
                     <button class="btn-galeria btn-next" onclick="mudarSlide(1)">&#10095;</button>
                 </div>
 
-                <!-- TEXTO ADICIONADO LOGO ABAIXO DA GALERIA -->
                 <div class="texto-abaixo-galeria">
                     <p><strong>História Marcante de Superação:</strong> A cachorrinha "Orelhuda" foi encontrada magra e debilitada perto de uma pista. Após ser resgatada, tratada de TVT e doença do carrapato, ela foi castrada, vacinada e adotada por uma família maravilhosa!</p>
                 </div>
@@ -195,14 +276,14 @@
 
 O que era um resgate pontual virou missão de vida. Começou a acolher mais um, e mais um, até que a casa em apartamento ficou pequena e foi preciso estruturar um espaço adequado. Hoje, mantemos um abrigo no bairro Caonze (além do suporte na residência principal), acolhendo cerca de 40 animais entre cães resgatados das ruas, casos de abandono e reabilitação.
 
-Cada animal que chega traz uma história de superação. Como a da nossa inesquecível 'Orelhuda' (ou Dumbo): encontrada magrinha revirando lixo perto de uma pista movimentada, assustada e com diversas doenças graves — incluindo TVT (tumor venéreo transmissível) e doença do carrapato. Após muito tratamento, carinho, castração e vacinação, ela se recuperou, participou de feiras de adoção com direito a roupinha nova e hoje vive feliz com uma família maravilhosa, viajando para a praia e recebendo todo o amor que merecia. É por histórias como essa que nunca paramos
+Cada animal que chega traz uma história de superação. Como a da nossa inesquecível 'Orelhuda' (ou Dumbo): encontrada magrinha revirando lixo perto de uma pista movimentada, assustada e com diversas doenças graves — incluindo TVT (tumor venéreo transmissível) e doença do carrapato. Após muito tratamento, carinho, castração e vacinação, ela se recuperou, participou de feiras de adoção com direito a roupinha nova e hoje vive feliz com uma família maravilhosa, viajando para a praia e recebendo todo o amor que merecia. É por histórias como essa que nunca paramos.
 </p>
             </div>
 
         </div>
     </section>
 
-    <!-- SEÇÃO DE DOAÇÃO -->
+    <!-- SEÇÃO DE DOAÇÃO INTEGRADA AO SUPABASE -->
     <section id="doacao">
         <h2>Faça sua doação</h2>
         <p>Manter um abrigo com dezenas de animais resgatados exige muito esforço diário, e toda ajuda é bem-vinda para garantir o bem-estar deles!</p>
@@ -214,7 +295,43 @@ Cada animal que chega traz uma história de superação. Como a da nossa inesque
             <li><strong>Itens de Limpeza e Higiene:</strong> Gasta-se muito material de limpeza e xampus para manter o ambiente limpo e desinfetado.</li>
         </ul>
 
-        <p><strong>Como entregar:</strong> As doações podem ser deixadas diretamente em casas de ração parceiras no bairro (onde o doador deixa pago e nós retiramos), ou agendando uma visita ao abrigo.</p>
+        <div class="container-doacao">
+            <!-- FORMULÁRIO DE CADASTRO -->
+            <div class="card-doacao">
+                <h3>Cadastrar Doação de Alimento/Insumo</h3>
+                <div class="form-grupo">
+                    <label for="nomeDoador">Seu Nome:</label>
+                    <input type="text" id="nomeDoador" placeholder="Ex: Maria da Silva">
+                </div>
+                <div class="form-grupo">
+                    <label for="telDoador">Telefone / WhatsApp:</label>
+                    <input type="text" id="telDoador" placeholder="(21) xxxx-xxxx">
+                </div>
+                <div class="form-grupo">
+                    <label for="itemDoado">Item que deseja doar:</label>
+                    <input type="text" id="itemDoado" placeholder="Ex: Saco de Ração Cães 10kg">
+                </div>
+                <button class="btn-enviar" onclick="cadastrarDoacao()">Registrar Doação</button>
+            </div>
+
+            <!-- TABELA DE DOAÇÕES REGISTRADAS -->
+            <div class="card-doacao">
+                <h3>Doações Registradas</h3>
+                <table class="tabela-doacoes">
+                    <thead>
+                        <tr>
+                            <th>Item Doado</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="corpoTabelaDoacoes">
+                        <tr>
+                            <td colspan="2">Carregando doações...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </section>
 
     <!-- SEÇÃO SOBRE OS ANIMAIS -->
@@ -248,7 +365,7 @@ Cada animal que chega traz uma história de superação. Como a da nossa inesque
         <p>Telefone de contato: (21) 99032-5225</p>
     </section>
 
-    <!-- SCRIPT DA GALERIA (CORRIGIDO) -->
+    <!-- SCRIPT DA GALERIA -->
     <script>
         const trilho = document.getElementById('trilhoSlides');
         const slides = trilho.querySelectorAll('img');
@@ -262,7 +379,6 @@ Cada animal que chega traz uma história de superação. Como a da nossa inesque
             } else if (indexAtual < 0) {
                 indexAtual = totalSlides - 1;
             }
-            // Correção da interpolação no JS
             trilho.style.transform = `translateX(-${indexAtual * 100}%)`;
         }
 
@@ -295,5 +411,42 @@ Cada animal que chega traz uma história de superação. Como a da nossa inesque
         iniciarAutoplay();
     </script>
 
-</body>
-</html>
+    <!-- SCRIPT DE CONEXÃO COM O SUPABASE -->
+    <script>
+        const SUPABASE_URL = 'https://vflsczfzlaeuvuuuanvj.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_pMac6eWegY4xja4U-62FmQ_Pg45EpPo';
+
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // Função para carregar doações na tabela (READ)
+        async function carregarDoacoes() {
+            const corpoTabela = document.getElementById('corpoTabelaDoacoes');
+            corpoTabela.innerHTML = '<tr><td colspan="2">Carregando...</td></tr>';
+
+            const { data, error } = await supabase
+                .from('doacoes')
+                .select('*');
+
+            if (error) {
+                console.error(error);
+                corpoTabela.innerHTML = '<tr><td colspan="2">Erro ao carregar doações.</td></tr>';
+                return;
+            }
+
+            if (data.length === 0) {
+                corpoTabela.innerHTML = '<tr><td colspan="2">Nenhuma doação cadastrada ainda.</td></tr>';
+                return;
+            }
+
+            corpoTabela.innerHTML = '';
+            data.forEach(doacao => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${doacao.item}</td>
+                    <td><span class="badge-status">${doacao.status || 'Pendente'}</span></td>
+                `;
+                corpoTabela.appendChild(tr);
+            });
+        }
+
+        // Função para cadastrar doador e do
