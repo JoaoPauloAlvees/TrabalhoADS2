@@ -1,616 +1,707 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Tema segundo periodo</title>
-  
-  <!-- Importando a biblioteca do Supabase via CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doação de Rações</title>
 
-  <style>
-    html { scroll-behavior: smooth; }
-    body { 
-        margin: 0;
-        min-height: 100vh;
-        background: linear-gradient(to bottom, #F0F2F5, #eef2f7);
-        background-attachment: fixed; 
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: #2B2D42;
-    }
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-    .menu-superior {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        background-color: #E07A5F;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        flex-wrap: wrap;
-        gap: 10px;
-    }
+    <style>
+        html { scroll-behavior: smooth; }
 
-    .menu-superior a { 
-        text-decoration: none; 
-        color: #2B2D42;            
-        font-weight: bolder;
-        cursor: pointer;
-    } 
+        body {
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #F0F2F5, #eef2f7);
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #2B2D42;
+        }
 
-    .menu-superior a:hover { color: #81B29A; }
-    
-    section {
-        padding: 40px 20px;
-        border-bottom: 1px solid rgba(72, 190, 26, 0.1);
-    }
+        .menu-superior {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #E07A5F;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
 
-    /* BLOCO PRINCIPAL FLEXBOX */
-    .bloco-conteudo {
-        display: flex;
-        flex-direction: row;
-        align-items: flex-start;
-        padding: 10px;
-        gap: 30px;
-        flex-wrap: wrap; 
-    }
+        .menu-superior a {
+            text-decoration: none;
+            color: #2B2D42;
+            font-weight: bold;
+        }
 
-    /* COLUNA DA ESQUERDA: Agora ela cresce dinamicamente e quebra quando fica apertada */
-    .coluna-esquerda {
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 350px;
-        width: 100%;
-        gap: 15px;
-    }
+        .menu-superior a:hover { color: #fff; }
 
-    /* --- ESTILOS DA GALERIA AUTOMÁTICA --- */
-    .galeria-container {
-        position: relative;
-        width: 100%;
-        height: 350px; /* Aumentado a altura para dar mais destaque */
-        overflow: hidden;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    }
+        section {
+            padding: 40px 20px;
+            border-bottom: 1px solid rgba(72, 190, 26, 0.1);
+        }
 
-    .galeria-slides {
-        display: flex;
-        transition: transform 0.5s ease-in-out;
-        height: 100%;
-    }
-
-    .galeria-slides img {
-        width: 100%;
-        height: 100%;
-        object-fit: contain; 
-        background-color: #000;
-        flex-shrink: 0;
-    }
-
-    .btn-galeria {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: rgba(0, 0, 0, 0.4);
-        color: white;
-        border: none;
-        padding: 10px 14px;
-        cursor: pointer;
-        font-size: 16px;
-        border-radius: 4px;
-        transition: background 0.3s;
-        z-index: 10;
-    }
-
-    .btn-galeria:hover { background-color: rgba(0, 0, 0, 0.8); }
-    .btn-prev { left: 10px; }
-    .btn-next { right: 10px; }
-
-    .texto-abaixo-galeria {
-        background-color: #ffffff;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        font-size: 0.95rem;
-        line-height: 1.5;
-        border-left: 4px solid #E07A5F;
-    }
-
-    .texto-lado {
-        display: flex;
-        flex-direction: column;
-        flex: 2 1 400px;
-        min-width: 280px;
-    }
-
-    h1, h2, h3, p { margin: 10px 0; }  
-
-    #contatos a {
-        color: #81B29A; 
-        text-decoration: none;
-        font-weight: bold;
-        transition: 0.3s;
-    }
-
-    #contatos a:hover {
-        color: #E07A5F; 
-        text-decoration: underline;
-    }
-
-    .nome-principal h1 {
-        color: #E26D5C;
-        font-size: 2.2rem;
-    }
-
-    /* ESTILOS DO FORMULÁRIO E TABELA DE DOAÇÃO */
-    .container-doacao {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 25px;
-        margin-top: 25px;
-    }
-
-    .card-doacao {
-        background: #ffffff;
-        padding: 25px;
-        border-radius: 12px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-        flex: 1;
-        min-width: 300px;
-        overflow-x: auto;
-    }
-
-    .form-grupo { margin-bottom: 15px; }
-
-    .form-grupo label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-        color: #2B2D42;
-    }
-
-    .form-grupo input, .form-grupo select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        box-sizing: border-box;
-        font-size: 0.95rem;
-    }
-
-    .btn-enviar {
-        background-color: #E07A5F;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        font-size: 1rem;
-        font-weight: bold;
-        border-radius: 6px;
-        cursor: pointer;
-        width: 100%;
-        transition: background 0.3s;
-    }
-
-    .btn-enviar:hover { background-color: #d06448; }
-
-    .tabela-doacoes {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-    }
-
-    .tabela-doacoes th, .tabela-doacoes td {
-        padding: 10px 12px;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-        font-size: 0.9rem;
-    }
-
-    .tabela-doacoes th {
-        background-color: #81B29A;
-        color: white;
-    }
-
-    .badge-status {
-        background-color: #f39c12;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 12px;
-        font-size: 0.75rem;
-        font-weight: bold;
-    }
-
-    .badge-status.concluido {
-        background-color: #27ae60;
-    }
-
-    .btn-acao {
-        padding: 5px 8px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 0.8rem;
-        font-weight: bold;
-        margin-right: 4px;
-    }
-
-    .btn-editar { background-color: #3498db; color: white; }
-    .btn-editar:hover { background-color: #2980b9; }
-
-    .btn-excluir { background-color: #e74c3c; color: white; }
-    .btn-excluir:hover { background-color: #c0392b; }
-
-    /* MEDIA QUERY: Força a quebra para uma coluna quando a janela for reduzida */
-    @media (max-width: 950px) {
         .bloco-conteudo {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .coluna-esquerda {
+            display: flex;
             flex-direction: column;
-            align-items: stretch;
+            flex: 1 1 350px;
+            width: 100%;
+            gap: 15px;
         }
 
         .galeria-container {
-            height: 300px;
+            position: relative;
+            width: 100%;
+            height: 350px;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.15);
+        }
+
+        .galeria-slides {
+            display: flex;
+            transition: transform .5s ease-in-out;
+            height: 100%;
+        }
+
+        .galeria-slides img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background-color: #000;
+            flex-shrink: 0;
+        }
+
+        .btn-galeria {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0,0,0,.4);
+            color: white;
+            border: none;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+
+        .btn-prev { left: 10px; }
+        .btn-next { right: 10px; }
+
+        .texto-abaixo-galeria {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.05);
+            font-size: .95rem;
+            line-height: 1.5;
+            border-left: 4px solid #E07A5F;
         }
 
         .texto-lado {
+            display: flex;
+            flex-direction: column;
+            flex: 2 1 400px;
+            min-width: 280px;
+        }
+
+        h1, h2, h3, p { margin: 10px 0; }
+
+        #contatos a {
+            color: #548b70;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        #contatos a:hover {
+            color: #E07A5F;
+            text-decoration: underline;
+        }
+
+        .nome-principal h1 {
+            color: #E26D5C;
+            font-size: 2.2rem;
+        }
+
+        .container-doacao {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .card-doacao {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,.08);
+            flex: 1 1 350px;
+            min-width: 0;
+            overflow-x: auto;
+        }
+
+        .form-grupo { margin-bottom: 15px; }
+
+        .form-grupo label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #2B2D42;
+        }
+
+        .form-grupo input,
+        .form-grupo select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: .95rem;
+        }
+
+        .btn-enviar {
+            background-color: #E07A5F;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
             width: 100%;
         }
-    }
-  </style>
+
+        .btn-enviar:hover { background-color: #d06448; }
+
+        .tabela-doacoes {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        .tabela-doacoes th,
+        .tabela-doacoes td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: .9rem;
+        }
+
+        .tabela-doacoes th {
+            background-color: #81B29A;
+            color: white;
+        }
+
+        .badge-status {
+            display: inline-block;
+            background-color: #f39c12;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: .75rem;
+            font-weight: bold;
+        }
+
+        .badge-status.concluido { background-color: #27ae60; }
+
+        .btn-acao {
+            padding: 6px 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: .8rem;
+            font-weight: bold;
+            margin: 2px;
+        }
+
+        .btn-editar { background-color: #3498db; color: white; }
+        .btn-excluir { background-color: #e74c3c; color: white; }
+
+        @media (max-width: 950px) {
+            .bloco-conteudo {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .galeria-container { height: 300px; }
+            .texto-lado { width: 100%; }
+            .menu-superior { justify-content: center; }
+        }
+    </style>
 </head>
+
 <body>
 
-    <header class="menu-superior">
-        <span><a href="#inicio">Conheça nossa história</a></span>
-        <span><a href="#doacao">Faça aqui sua doação</a></span>
-        <span><a href="#animais">Sobre os Animais</a></span>
-        <span><a href="#ods">Sustentabilidade e ODS</a></span>
-        <span><a href="#contatos">Contatos</a></span>
-    </header>
+<header class="menu-superior">
+    <span><a href="#inicio">Conheça nossa história</a></span>
+    <span><a href="#doacao">Faça aqui sua doação</a></span>
+    <span><a href="#animais">Sobre os Animais</a></span>
+    <span><a href="#ods">Sustentabilidade e ODS</a></span>
+    <span><a href="#contatos">Contatos</a></span>
+</header>
 
-    <!-- SEÇÃO PRINCIPAL -->
-    <section id="inicio">
-        <div class="bloco-conteudo">
-            
-            <!-- COLUNA DA ESQUERDA: GALERIA + TEXTO ABAIXO DELA -->
-            <div class="coluna-esquerda">
-                
-                <div class="galeria-container">
-                    <div class="galeria-slides" id="trilhoSlides">
-                        <img src="01.jpeg" alt="Resgate e Cuidados 1">
-                        <img src="02.jpeg" alt="Resgate e Cuidados 2">
-                        <img src="03.jpeg" alt="Resgate e Cuidados 3">
-                    </div>
-
-                    <button class="btn-galeria btn-prev" onclick="mudarSlide(-1)">&#10094;</button>
-                    <button class="btn-galeria btn-next" onclick="mudarSlide(1)">&#10095;</button>
+<section id="inicio">
+    <div class="bloco-conteudo">
+        <div class="coluna-esquerda">
+            <div class="galeria-container">
+                <div class="galeria-slides" id="trilhoSlides">
+                    <img src="01.jpeg" alt="Resgate e cuidados 1">
+                    <img src="02.jpeg" alt="Resgate e cuidados 2">
+                    <img src="03.jpeg" alt="Resgate e cuidados 3">
                 </div>
 
-                <div class="texto-abaixo-galeria">
-                    <p><strong>História Marcante de Superação:</strong> A cachorrinha "Orelhuda" foi encontrada magra e debilitada perto de uma pista. Após ser resgatada, tratada de TVT e doença do carrapato, ela foi castrada, vacinada e adotada por uma família maravilhosa!</p>
-                </div>
+                <button class="btn-galeria btn-prev"
+                        onclick="mudarSlide(-1)"
+                        aria-label="Foto anterior">&#10094;</button>
 
+                <button class="btn-galeria btn-next"
+                        onclick="mudarSlide(1)"
+                        aria-label="Próxima foto">&#10095;</button>
             </div>
 
-            <!-- COLUNA DA DIREITA: TEXTO INTEGRAL ORIGINAL -->
-            <div class="texto-lado"> 
-                <div class="nome-principal" id="nome-principal">
-                    <h1>Doação de Rações &#128062;</h1>
-                </div>
-                <p><strong>Nossa História de Luta:</strong> Há 20 anos dedicamos nossa vida ao resgate e proteção animal em Nova Iguaçu. Tudo começou com o resgate de uma cachorrinha com sarna severa no trabalho.</p>
-                <p>Há 20 anos, a nossa fundadora atua na causa animal em Nova Iguaçu. Tudo começou de forma inesperada: trabalhando no Detran, ela se deparou com uma cachorrinha em estado crítico — magra, sem pelos, sofrendo de sarna e com infecções graves. Era dezembro, o órgão entraria em recesso e ela ficou angustiada pensando em quem cuidaria daquele animal. Seu marido então disparou: 'Leva ela, você cuida e depois vê o que faz'. Foi o pontapé inicial de uma vida inteira dedicada ao resgate.
-
-O que era um resgate pontual virou missão de vida. Começou a acolher mais um, e mais um, até que a casa em apartamento ficou pequena e foi preciso estruturar um espaço adequado. Hoje, mantemos um abrigo no bairro Caonze (além do suporte na residência principal), acolhendo cerca de 40 animais entre cães resgatados das ruas, casos de abandono e reabilitação.
-
-Cada animal que chega traz uma história de superação. Como a da nossa inesquecível 'Orelhuda' (ou Dumbo): encontrada magrinha revirando lixo perto de uma pista movimentada, assustada e com diversas doenças graves — incluindo TVT (tumor venéreo transmissível) e doença do carrapato. Após muito tratamento, carinho, castração e vacinação, ela se recuperou, participou de feiras de adoção com direito a roupinha nova e hoje vive feliz com uma família maravilhosa, viajando para a praia e recebendo todo o amor que merecia. É por histórias como essa que nunca paramos.
-</p>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- SEÇÃO DE DOAÇÃO INTEGRADA ÀS 3 TABELAS COM CRUD COMPLETO -->
-    <section id="doacao">
-        <h2>Faça sua doação</h2>
-        <p>Manter um abrigo com dezenas de animais resgatados exige muito esforço diário, e toda ajuda é bem-vinda para garantir o bem-estar deles!</p>
-        
-        <h3>Como você pode ajudar:</h3>
-        <ul>
-            <li><strong>Ração:</strong> Aceitamos qualquer tipo de ração! Seja a ração de combate (mais em conta) ou rações de melhor qualidade.</li>
-            <li><strong>Medicamentos e Vacinas:</strong> Cerca de 90% dos animais chegam com doença do carrapato. Precisamos muito de remédios como <em>Doxitrat</em> e <em>Hemolitan</em>, além de vacinas essenciais (V10/polivalente).</li>
-            <li><strong>Itens de Limpeza e Higiene:</strong> Gasta-se muito material de limpeza e xampus para manter o ambiente limpo e desinfetado.</li>
-        </ul>
-
-        <div class="container-doacao">
-            <!-- FORMULÁRIO DE CADASTRO (CREATE) -->
-            <div class="card-doacao">
-                <h3>Cadastrar Doação</h3>
-                <div class="form-grupo">
-                    <label for="nomeDoador">Seu Nome:</label>
-                    <input type="text" id="nomeDoador" placeholder="Ex: João Paulo">
-                </div>
-                <div class="form-grupo">
-                    <label for="telDoador">Telefone / WhatsApp:</label>
-                    <input type="text" id="telDoador" placeholder="(21) 98198-4075">
-                </div>
-                <div class="form-grupo">
-                    <label for="itemDoado">Item que deseja doar:</label>
-                    <input type="text" id="itemDoado" placeholder="Ex: Saco de Ração Cães 10kg">
-                </div>
-                <div class="form-grupo">
-                    <label for="selectPontoColeta">Selecione o Ponto de Coleta / Entrega:</label>
-                    <select id="selectPontoColeta">
-                        <option value="">Carregando pontos de coleta...</option>
-                    </select>
-                </div>
-                <button class="btn-enviar" onclick="cadastrarDoacao()">Registrar Doação</button>
-            </div>
-
-            <!-- TABELA DE DOAÇÕES COM UPDATE E DELETE -->
-            <div class="card-doacao">
-                <h3>Gerenciamento de Doações (CRUD)</h3>
-                <table class="tabela-doacoes">
-                    <thead>
-                        <tr>
-                            <th>Item</th>
-                            <th>Local</th>
-                            <th>Status</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-                    <tbody id="corpoTabelaDoacoes">
-                        <tr>
-                            <td colspan="4">Carregando doações...</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="texto-abaixo-galeria">
+                <p>
+                    <strong>História Marcante de Superação:</strong>
+                    A cachorrinha Orelhuda foi encontrada magra e debilitada
+                    perto de uma pista. Após ser resgatada, tratada de TVT e
+                    doença do carrapato, foi castrada, vacinada e adotada
+                    por uma família maravilhosa!
+                </p>
             </div>
         </div>
-    </section>
 
-    <!-- SEÇÃO SOBRE OS ANIMAIS -->
-    <section id="animais">
-        <h2>Sobre os Animais e Rotina</h2>
-        <p>A rotina no abrigo no Caonze começa bem cedo com a alimentação e higiene dos 40 animais. Todos os filhotes resgatados recebem a primeira dose da vacina, são monitorados e passam pela castração obrigatória aos 6 meses.</p>
-    </section>
+        <div class="texto-lado">
+            <div class="nome-principal">
+                <h1>Doação de Rações &#128062;</h1>
+            </div>
 
-    <!-- SEÇÃO ODS -->
-    <section id="ods">
-        <h2>ODS 9 - Indústria, Inovação e Infraestrutura</h2>
-        <p>Este aplicativo aplica tecnologia para conectar doadores e protetores, garantindo a gestão sustentável de insumos e saúde pública animal.</p>
-    </section>
+            <p><strong>Nossa História de Luta:</strong>
+                Há 20 anos dedicamos nossa vida ao resgate e proteção animal
+                em Nova Iguaçu. Tudo começou com o resgate de uma cachorrinha
+                com sarna severa.
+            </p>
 
-    <!-- SEÇÃO CONTATOS -->
-    <section id="contatos">
-        <h2>Contatos</h2>
-        
-        <h3>Aluno de ADS: João Paulo Alves</h3>
-        <a href="https://www.linkedin.com/in/joao-alves-b4067b316/" target="_blank">LinkedIn</a> | 
-        <a href="https://github.com/JoaoPauloAlvees" target="_blank">GitHub</a>
-        <p>Email: Joao.alvenne@gmail.com</p>
-        <p>Telefone de contato: (21) 98198-4075</p>
+            <p>
+                Nossa fundadora trabalhava no Detran quando encontrou uma
+                cachorrinha em estado crítico: magra, sem pelos e sofrendo
+                de sarna e infecções. Seu marido disse: "Leva ela, você cuida
+                e depois vê o que faz". Esse foi o começo de uma vida dedicada
+                ao resgate animal.
+            </p>
+        </div>
+    </div>
+</section>
 
-        <hr style="border: 0; border-top: 1px solid #ccc; margin: 20px 0;">
+<section id="doacao">
+    <h2>Faça sua doação</h2>
 
-        <h3>Aluno de ADS: Fernando Cruz</h3>
-        <a href="https://linkedin.com/in/fernando-cruz-219283363" target="_blank">LinkedIn</a> | 
-        <a href="https://github.com/fernandocruzbjj" target="_blank">GitHub</a>
-        <p>Email: fernandocruzbjj@gmail.com</p>
-        <p>Telefone de contato: (21) 99032-5225</p>
-    </section>
+    <p>
+        Manter um abrigo com dezenas de animais resgatados exige muito
+        esforço diário. Toda ajuda é bem-vinda!
+    </p>
 
-    <!-- SCRIPT DA GALERIA -->
-    <script>
-        const trilho = document.getElementById('trilhoSlides');
-        const slides = trilho.querySelectorAll('img');
-        let indexAtual = 0;
-        const totalSlides = slides.length;
-        let intervaloAuto;
+    <h3>Como você pode ajudar:</h3>
+    <ul>
+        <li><strong>Ração:</strong> aceitamos diferentes tipos de ração.</li>
+        <li><strong>Medicamentos e vacinas:</strong> precisamos de ajuda
+            para cuidar da saúde dos animais.</li>
+        <li><strong>Limpeza e higiene:</strong> materiais para manter
+            o ambiente limpo também são necessários.</li>
+    </ul>
 
-        function atualizarCarrossel() {
-            if (indexAtual >= totalSlides) {
-                indexAtual = 0;
-            } else if (indexAtual < 0) {
-                indexAtual = totalSlides - 1;
-            }
-            trilho.style.transform = `translateX(-${indexAtual * 100}%)`;
+    <div class="container-doacao">
+
+        <div class="card-doacao">
+            <h3>Cadastrar Doação</h3>
+
+            <div class="form-grupo">
+                <label for="nomeDoador">Seu nome:</label>
+                <input type="text" id="nomeDoador"
+                       placeholder="Ex.: João Paulo" required>
+            </div>
+
+            <div class="form-grupo">
+                <label for="emailDoador">Seu e-mail:</label>
+                <input type="email" id="emailDoador"
+                       placeholder="seuemail@exemplo.com" required>
+            </div>
+
+            <div class="form-grupo">
+                <label for="telDoador">Telefone / WhatsApp:</label>
+                <input type="tel" id="telDoador"
+                       placeholder="(21) 98198-4075" required>
+            </div>
+
+            <div class="form-grupo">
+                <label for="tipoDoador">Tipo de doador:</label>
+                <select id="tipoDoador" required>
+                    <option value="">Selecione o tipo</option>
+                    <option value="Pessoa Física">Pessoa Física</option>
+                    <option value="Pessoa Jurídica">Pessoa Jurídica</option>
+                </select>
+            </div>
+
+            <div class="form-grupo">
+                <label for="itemDoado">Item que deseja doar:</label>
+                <input type="text" id="itemDoado"
+                       placeholder="Ex.: Saco de ração para cães 10 kg" required>
+            </div>
+
+            <div class="form-grupo">
+                <label for="selectPontoColeta">Ponto de coleta / entrega:</label>
+                <select id="selectPontoColeta" required>
+                    <option value="">Carregando pontos de coleta...</option>
+                </select>
+            </div>
+
+            <button class="btn-enviar" type="button" onclick="cadastrarDoacao()">
+                Registrar Doação
+            </button>
+        </div>
+
+        <div class="card-doacao">
+            <h3>Gerenciamento de Doações</h3>
+
+            <table class="tabela-doacoes">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Local</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+
+                <tbody id="corpoTabelaDoacoes">
+                    <tr>
+                        <td colspan="4">Carregando doações...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section id="animais">
+    <h2>Sobre os Animais e Rotina</h2>
+    <p>
+        A rotina do abrigo no Caonze começa cedo, com a alimentação e higiene
+        dos animais resgatados. Os filhotes recebem cuidados veterinários,
+        vacinação e acompanhamento.
+    </p>
+</section>
+
+<section id="ods">
+    <h2>ODS 9 - Indústria, Inovação e Infraestrutura</h2>
+    <p>
+        Este projeto utiliza tecnologia para conectar doadores e protetores,
+        facilitando a gestão de doações e de insumos para a saúde animal.
+    </p>
+</section>
+
+<section id="contatos">
+    <h2>Contatos</h2>
+
+    <h3>Aluno de ADS: João Paulo Alves</h3>
+    <a href="https://www.linkedin.com/in/joao-alves-b4067b316/"
+       target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+    <a href="https://github.com/JoaoPauloAlvees"
+       target="_blank" rel="noopener noreferrer">GitHub</a>
+
+    <p>Email: Joao.alvenne@gmail.com</p>
+    <p>Telefone: (21) 98198-4075</p>
+
+    <hr style="border:0; border-top:1px solid #ccc; margin:20px 0;">
+
+    <h3>Aluno de ADS: Fernando Cruz</h3>
+    <a href="https://linkedin.com/in/fernando-cruz-219283363"
+       target="_blank" rel="noopener noreferrer">LinkedIn</a> |
+    <a href="https://github.com/fernandocruzbjj"
+       target="_blank" rel="noopener noreferrer">GitHub</a>
+
+    <p>Email: fernandocruzbjj@gmail.com</p>
+    <p>Telefone: (21) 99032-5225</p>
+</section>
+
+<script>
+const SUPABASE_URL = 'https://vflsczfzlaeuvuuuanvj.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_pMac6eWegY4xja4U-62FmQ_Pg45EpPo';
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_ANON_KEY
+);
+
+// GALERIA DE FOTOS
+let slideAtual = 0;
+
+function mudarSlide(direcao) {
+    const trilho = document.getElementById('trilhoSlides');
+    const slides = trilho.querySelectorAll('img');
+
+    if (!slides.length) return;
+
+    slideAtual = (slideAtual + direcao + slides.length) % slides.length;
+    trilho.style.transform = `translateX(-${slideAtual * 100}%)`;
+}
+
+// CARREGAR PONTOS DE COLETA
+async function carregarPontosColeta() {
+    const select = document.getElementById('selectPontoColeta');
+
+    try {
+        select.innerHTML = '<option value="">Carregando pontos...</option>';
+
+        const { data, error } = await supabaseClient
+            .from('pontos_coleta')
+            .select('*');
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            select.innerHTML = '<option value="">Nenhum ponto cadastrado</option>';
+            return;
         }
 
-        function mudarSlide(direcao) {
-            indexAtual += direcao;
-            atualizarCarrossel();
-            reiniciarTemporizador();
+        select.innerHTML = '<option value="">Selecione o local...</option>';
+
+        data.forEach((ponto) => {
+            const option = document.createElement('option');
+            option.value = ponto.id;
+            option.textContent = ponto.nome || ponto.nome_ponto || 'Local sem nome';
+            select.appendChild(option);
+        });
+
+        console.log('Pontos de coleta carregados:', data.length);
+
+    } catch (erro) {
+        console.error('Erro ao carregar pontos de coleta:', erro);
+        select.innerHTML = '<option value="">Erro ao carregar locais</option>';
+    }
+}
+
+// CARREGAR DOAÇÕES NA TABELA
+async function carregarDoacoes() {
+    const corpo = document.getElementById('corpoTabelaDoacoes');
+
+    try {
+        corpo.innerHTML = '<tr><td colspan="4">Carregando doações...</td></tr>';
+
+        const { data, error } = await supabaseClient
+            .from('doacoes')
+            .select(`
+                id,
+                item,
+                status,
+                ponto_coleta_id,
+                pontos_coleta (id, nome)
+            `)
+            .order('id', { ascending: false });
+
+        if (error) throw error;
+
+        if (!data || data.length === 0) {
+            corpo.innerHTML = '<tr><td colspan="4">Nenhuma doação cadastrada.</td></tr>';
+            return;
         }
 
-        function iniciarAutoplay() {
-            intervaloAuto = setInterval(() => {
-                indexAtual++;
-                atualizarCarrossel();
-            }, 3500);
-        }
+        corpo.innerHTML = '';
 
-        function pararAutoplay() {
-            clearInterval(intervaloAuto);
-        }
+        data.forEach((doacao) => {
+            const linha = document.createElement('tr');
 
-        function reiniciarTemporizador() {
-            pararAutoplay();
-            iniciarAutoplay();
-        }
+            const colunaItem = document.createElement('td');
+            colunaItem.textContent = doacao.item || 'Item não informado';
 
-        const container = document.querySelector('.galeria-container');
-        container.addEventListener('mouseenter', pararAutoplay);
-        container.addEventListener('mouseleave', iniciarAutoplay);
+            const colunaLocal = document.createElement('td');
+            colunaLocal.textContent =
+                doacao.pontos_coleta?.nome || 'Local não informado';
 
-        iniciarAutoplay();
-    </script>
+            const colunaStatus = document.createElement('td');
+            const badge = document.createElement('span');
+            badge.className = 'badge-status';
 
-    <!-- SCRIPT DE CONEXÃO COM O SUPABASE E FUNÇÕES DE CRUD -->
-    <script>
-        const SUPABASE_URL = 'https://vflsczfzlaeuvuuuanvj.supabase.co';
-        const SUPABASE_ANON_KEY = 'sb_publishable_pMac6eWegY4xja4U-62FmQ_Pg45EpPo';
+            // Considera as duas grafias de "Concluída"
+            const concluida = ['Concluída', 'Concluida'].includes(
+                (doacao.status || '').trim()
+            );
 
-        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-        // 1. READ: Carrega os Pontos de Coleta (3ª Tabela) para o <select>
-        async function carregarPontosColeta() {
-            const select = document.getElementById('selectPontoColeta');
-            
-            const { data, error } = await supabase
-                .from('pontos_coleta')
-                .select('*');
-
-            if (error) {
-                console.error('Erro ao buscar pontos de coleta:', error);
-                select.innerHTML = '<option value="">Erro ao carregar locais</option>';
-                return;
+            if (concluida) {
+                badge.classList.add('concluido');
             }
 
-            if (data.length === 0) {
-                select.innerHTML = '<option value="">Nenhum ponto cadastrado no Supabase</option>';
-                return;
-            }
+            badge.textContent = doacao.status || 'Pendente';
+            colunaStatus.appendChild(badge);
 
-            select.innerHTML = '<option value="">Selecione onde vai entregar...</option>';
-            data.forEach(ponto => {
-                const option = document.createElement('option');
-                option.value = ponto.id;
-                option.textContent = `${ponto.nome_ponto}`;
-                select.appendChild(option);
-            });
-        }
+            const colunaAcoes = document.createElement('td');
 
-        // 2. READ: Lista as doações com JOIN na 3ª tabela
-        async function carregarDoacoes() {
-            const corpoTabela = document.getElementById('corpoTabelaDoacoes');
-            corpoTabela.innerHTML = '<tr><td colspan="4">Carregando...</td></tr>';
+            // Só mostra os botões se a doação ainda não foi concluída
+            if (!concluida) {
+                const botaoConcluir = document.createElement('button');
+                botaoConcluir.type = 'button';
+                botaoConcluir.className = 'btn-acao btn-editar';
+                botaoConcluir.textContent = 'Concluir';
+                botaoConcluir.addEventListener('click', () => {
+                    atualizarStatus(doacao.id);
+                });
 
-            const { data, error } = await supabase
-                .from('doacoes')
-                .select(`
-                    id,
-                    item,
-                    status,
-                    pontos_coleta (nome_ponto)
-                `);
+                const botaoExcluir = document.createElement('button');
+                botaoExcluir.type = 'button';
+                botaoExcluir.className = 'btn-acao btn-excluir';
+                botaoExcluir.textContent = 'Excluir';
+                botaoExcluir.addEventListener('click', () => {
+                    excluirDoacao(doacao.id);
+                });
 
-            if (error) {
-                console.error(error);
-                corpoTabela.innerHTML = '<tr><td colspan="4">Erro ao carregar doações.</td></tr>';
-                return;
-            }
-
-            if (data.length === 0) {
-                corpoTabela.innerHTML = '<tr><td colspan="4">Nenhuma doação cadastrada ainda.</td></tr>';
-                return;
-            }
-
-            corpoTabela.innerHTML = '';
-            data.forEach(doacao => {
-                const nomePonto = doacao.pontos_coleta ? doacao.pontos_coleta.nome_ponto : 'Local não especificado';
-                const statusAtual = doacao.status || 'Pendente';
-                const classeBadge = statusAtual === 'Entregue' ? 'badge-status concluido' : 'badge-status';
-
-                const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td>${doacao.item}</td>
-                    <td>${nomePonto}</td>
-                    <td><span class="${classeBadge}">${statusAtual}</span></td>
-                    <td>
-                        <button class="btn-acao btn-editar" onclick="atualizarStatus('${doacao.id}', '${statusAtual}')">Concluir</button>
-                        <button class="btn-acao btn-excluir" onclick="excluirDoacao('${doacao.id}')">Excluir</button>
-                    </td>
-                `;
-                corpoTabela.appendChild(tr);
-            });
-        }
-
-        // 3. CREATE: Cadastra doador e doação vinculada
-        async function cadastrarDoacao() {
-            const nome = document.getElementById('nomeDoador').value.trim();
-            const telefone = document.getElementById('telDoador').value.trim();
-            const item = document.getElementById('itemDoado').value.trim();
-            const pontoColetaId = document.getElementById('selectPontoColeta').value;
-
-            if (!nome || !item || !pontoColetaId) {
-                alert('Por favor, preencha todos os campos e escolha um ponto de coleta!');
-                return;
-            }
-
-            const { data: doadorData, error: doadorError } = await supabase
-                .from('doadores')
-                .insert([{ nome: nome, telefone: telefone }])
-                .select();
-
-            if (doadorError) {
-                alert('Erro ao cadastrar doador.');
-                console.error(doadorError);
-                return;
-            }
-
-            const doadorId = doadorData[0].id;
-
-            const { error: doacaoError } = await supabase
-                .from('doacoes')
-                .insert([{ 
-                    item: item, 
-                    status: 'Pendente', 
-                    doador_id: doadorId,
-                    ponto_coleta_id: pontoColetaId 
-                }]);
-
-            if (doacaoError) {
-                alert('Erro ao salvar doação.');
-                console.error(doacaoError);
+                colunaAcoes.appendChild(botaoConcluir);
+                colunaAcoes.appendChild(botaoExcluir);
             } else {
-                alert('Doação registrada com sucesso!');
-                document.getElementById('nomeDoador').value = '';
-                document.getElementById('telDoador').value = '';
-                document.getElementById('itemDoado').value = '';
-                document.getElementById('selectPontoColeta').value = '';
-                carregarDoacoes();
+                colunaAcoes.textContent = '—';
             }
+
+            linha.appendChild(colunaItem);
+            linha.appendChild(colunaLocal);
+            linha.appendChild(colunaStatus);
+            linha.appendChild(colunaAcoes);
+
+            corpo.appendChild(linha);
+        });
+
+    } catch (erro) {
+        console.error('Erro ao carregar doações:', erro);
+        corpo.innerHTML = '<tr><td colspan="4">Erro ao carregar doações. Confira o Console.</td></tr>';
+    }
+}
+
+// CADASTRAR DOADOR E DOAÇÃO
+async function cadastrarDoacao() {
+    const nome = document.getElementById('nomeDoador').value.trim();
+    const email = document.getElementById('emailDoador').value.trim();
+    const telefone = document.getElementById('telDoador').value.trim();
+    const tipoDoador = document.getElementById('tipoDoador').value;
+    const item = document.getElementById('itemDoado').value.trim();
+    const pontoColetaId = document.getElementById('selectPontoColeta').value;
+
+    if (!nome || !email || !telefone || !tipoDoador || !item || !pontoColetaId) {
+        alert('Preencha todos os campos antes de registrar a doação.');
+        return;
+    }
+
+    try {
+        const { data: doador, error: erroDoador } = await supabaseClient
+            .from('doadores')
+            .insert([{
+                "Nome": nome,
+                "Email": email,
+                "Telefone": telefone,
+                "Tipo doador": tipoDoador
+            }])
+            .select('id')
+            .single();
+
+        if (erroDoador) {
+            console.error('Erro ao cadastrar doador:', erroDoador);
+            alert('Erro ao cadastrar doador: ' + erroDoador.message);
+            return;
         }
 
-        // 4. UPDATE: Atualiza o status da doação para "Entregue"
-        async function atualizarStatus(id, statusAtual) {
-            const novoStatus = statusAtual === 'Pendente' ? 'Entregue' : 'Pendente';
+        const { error: erroDoacao } = await supabaseClient
+            .from('doacoes')
+            .insert([{
+                item: item,
+                status: 'Pendente',
+                doador_id: doador.id,
+                ponto_coleta_id: Number(pontoColetaId)
+            }]);
 
-            const { error } = await supabase
-                .from('doacoes')
-                .update({ status: novoStatus })
-                .eq('id', id);
-
-            if (error) {
-                alert('Erro ao atualizar status.');
-                console.error(error);
-            } else {
-                carregarDoacoes();
-            }
+        if (erroDoacao) {
+            console.error('Erro ao cadastrar doação:', erroDoacao);
+            alert(
+                'O doador foi cadastrado, mas a doação não foi registrada: ' +
+                erroDoacao.message
+            );
+            return;
         }
 
-        // 5. DELETE: Remove uma doação do banco de dados
-        async function excluirDoacao(id) {
-            if (!confirm('Tem certeza que deseja excluir esta doação?')) return;
+        alert('Doação registrada com sucesso!');
 
-            const { error } = await supabase
-                .from('doacoes')
-                .delete()
-                .eq('id', id);
+        document.getElementById('nomeDoador').value = '';
+        document.getElementById('emailDoador').value = '';
+        document.getElementById('telDoador').value = '';
+        document.getElementById('tipoDoador').value = '';
+        document.getElementById('itemDoado').value = '';
+        document.getElementById('selectPontoColeta').value = '';
 
-            if (error) {
-                alert('Erro ao excluir doação.');
-                console.error(error);
-            } else {
-                alert('Doação excluída com sucesso!');
-                carregarDoacoes();
-            }
-        }
+        await carregarDoacoes();
 
-        // Inicializa as funções ao carregar a página
-        carregarPontosColeta();
-        carregarDoacoes();
-    </script>
+    } catch (erro) {
+        console.error('Erro inesperado ao cadastrar:', erro);
+        alert('Ocorreu um erro: ' + erro.message);
+    }
+}
+
+// ATUALIZAR STATUS
+async function atualizarStatus(id) {
+    try {
+        const { error } = await supabaseClient
+            .from('doacoes')
+            .update({ status: 'Concluída' })
+            .eq('id', id);
+
+        if (error) throw error;
+
+        alert('Doação marcada como concluída!');
+        await carregarDoacoes();
+
+    } catch (erro) {
+        console.error('Erro ao atualizar status:', erro);
+        alert('Não foi possível atualizar o status: ' + erro.message);
+    }
+}
+
+// EXCLUIR DOAÇÃO
+async function excluirDoacao(id) {
+    if (!confirm('Tem certeza de que deseja excluir esta doação?')) {
+        return;
+    }
+
+    try {
+        const { error } = await supabaseClient
+            .from('doacoes')
+            .delete()
+            .eq('id', id);
+
+        if (error) throw error;
+
+        alert('Doação excluída com sucesso!');
+        await carregarDoacoes();
+
+    } catch (erro) {
+        console.error('Erro ao excluir doação:', erro);
+        alert('Não foi possível excluir a doação: ' + erro.message);
+    }
+}
+
+// INICIAR A PÁGINA
+document.addEventListener('DOMContentLoaded', async () => {
+    await carregarPontosColeta();
+    await carregarDoacoes();
+});
+</script>
+
 </body>
 </html>
