@@ -19,23 +19,26 @@
             color: #2B2D42;
         }
 
+        /* MENU SUPERIOR OTIMIZADO PARA CELULAR E DESKTOP */
         .menu-superior {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            background-color: #E07A5F;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+     display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        background-color: #E07A5F;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        flex-wrap: wrap;
+        gap: 10px;}
 
         .menu-superior a {
             text-decoration: none;
             color: #2B2D42;
             font-weight: bold;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            transition: color 0.2s;
         }
 
         .menu-superior a:hover { color: #fff; }
@@ -246,11 +249,11 @@
             font-weight: bold;
             color: #2B2D42;
             cursor: pointer;
-            list-style: none; /* remove marcador padrão */
+            list-style: none;
         }
 
         .conteudo-texto summary::-webkit-details-marker {
-            display: none; /* remove marcador no Safari */
+            display: none;
         }
 
         .conteudo-texto summary::after {
@@ -271,15 +274,32 @@
             color: #4a4d6d;
         }
 
-        @media (max-width: 950px) {
+        /* AJUSTE ESPECÍFICO PARA DISPOSITIVOS MÓVEIS (CELULAR) */
+        @media (max-width: 768px) {
+            .menu-superior {
+                justify-content: flex-start;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                padding: 12px 10px;
+                -webkit-overflow-scrolling: touch;
+            }
+            .menu-superior::-webkit-scrollbar {
+                display: none; /* Oculta a barra de rolagem no celular para ficar limpo */
+            }
+            .menu-superior a {
+                font-size: 0.85rem;
+                padding: 4px 8px;
+                background: rgba(255, 255, 255, 0.2);
+                border-radius: 4px;
+            }
+
             .bloco-conteudo {
                 flex-direction: column;
                 align-items: stretch;
             }
 
-            .galeria-container { height: 300px; }
+            .galeria-container { height: 260px; }
             .texto-lado { width: 100%; }
-            .menu-superior { justify-content: center; }
         }
     </style>
 </head>
@@ -287,11 +307,11 @@
 <body>
 
 <header class="menu-superior">
-    <span><a href="#inicio">Conheça nossa história</a></span>
-    <span><a href="#animais">Sobre os Animais</a></span>
-    <span><a href="#ods12">ODS 12 - Consumo Consciente</a></span>
-    <span><a href="#doacao">Faça aqui sua doação</a></span>
-    <span><a href="#contatos">Contatos</a></span>
+    <a href="#inicio">Conheça nossa história</a>
+    <a href="#animais">Sobre os Animais</a>
+    <a href="#ods12">ODS 12 - Consumo Consciente</a>
+    <a href="#doacao">Faça aqui sua doação</a>
+    <a href="#contatos">Contatos</a>
 </header>
 
 <section id="inicio">
@@ -794,7 +814,7 @@ async function atualizarStatus(id) {
     }
 }
 
-// EXCLUIR DOAÇÃO
+/* EXCLUIR DOAÇÃO */
 async function excluirDoacao(id) {
     if (!confirm('Tem certeza de que deseja excluir esta doação?')) {
         return;
