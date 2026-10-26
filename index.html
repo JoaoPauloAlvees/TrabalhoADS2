@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -231,6 +230,47 @@
         .btn-editar { background-color: #3498db; color: white; }
         .btn-excluir { background-color: #e74c3c; color: white; }
 
+        /* Estilo para as Sanfonas (Acordeons) */
+        .conteudo-texto details {
+            background: #fff;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.05);
+            border-left: 4px solid #E07A5F;
+            transition: all 0.3s ease;
+        }
+
+        .conteudo-texto summary {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #2B2D42;
+            cursor: pointer;
+            list-style: none; /* remove marcador padrão */
+        }
+
+        .conteudo-texto summary::-webkit-details-marker {
+            display: none; /* remove marcador no Safari */
+        }
+
+        .conteudo-texto summary::after {
+            content: ' ➕';
+            float: right;
+            font-size: 0.9rem;
+            color: #E07A5F;
+        }
+
+        .conteudo-texto details[open] summary::after {
+            content: ' ➖';
+        }
+
+        .conteudo-texto details p, 
+        .conteudo-texto details ul {
+            margin-top: 15px;
+            line-height: 1.6;
+            color: #4a4d6d;
+        }
+
         @media (max-width: 950px) {
             .bloco-conteudo {
                 flex-direction: column;
@@ -248,9 +288,9 @@
 
 <header class="menu-superior">
     <span><a href="#inicio">Conheça nossa história</a></span>
-    <span><a href="#doacao">Faça aqui sua doação</a></span>
     <span><a href="#animais">Sobre os Animais</a></span>
-    <span><a href="#ods">Sustentabilidade e ODS</a></span>
+    <span><a href="#ods12">ODS 12 - Consumo Consciente</a></span>
+    <span><a href="#doacao">Faça aqui sua doação</a></span>
     <span><a href="#contatos">Contatos</a></span>
 </header>
 
@@ -276,10 +316,10 @@
             <div class="texto-abaixo-galeria">
                 <p>
                     <strong>História Marcante de Superação:</strong>
-                    A cachorrinha Orelhuda foi encontrada magra e debilitada
-                    perto de uma pista. Após ser resgatada, tratada de TVT e
-                    doença do carrapato, foi castrada, vacinada e adotada
-                    por uma família maravilhosa!
+                    A cachorrinha <strong>Orelhuda</strong> foi encontrada magra e debilitada
+                    perto de uma pista. Após ser resgatada, tratada de <strong>TVT</strong> e
+                    <strong>doença do carrapato</strong>, foi castrada, vacinada e <strong>adotada
+                    por uma família maravilhosa!</strong>
                 </p>
             </div>
         </div>
@@ -289,38 +329,138 @@
                 <h1>Doação de Rações &#128062;</h1>
             </div>
 
-            <p><strong>Nossa História de Luta:</strong>
-                Há 20 anos dedicamos nossa vida ao resgate e proteção animal
-                em Nova Iguaçu. Tudo começou com o resgate de uma cachorrinha
-                com sarna severa.
+            <p><strong>Nossa História: 20 Anos de Amor e Proteção Animal</strong></p>
+
+            <p>
+                Há <strong>mais de 20 anos</strong>, nossa trajetória em <strong>Nova Iguaçu</strong> é dedicada a 
+                transformar a realidade de animais abandonados e em situação de <strong>extrema vulnerabilidade</strong>. 
+                Tudo começou de forma improvisada, quando nossa fundadora trabalhava no <strong>Detran</strong> e encontrou 
+                uma cachorrinha debilitada, sem pelos e sofrendo de sarna. Ao ouvir do marido o incentivo 
+                <em>"Leva ela, você cuida e vê o que faz"</em>, iniciou-se uma missão de vida que nunca mais parou.
             </p>
 
             <p>
-                Nossa fundadora trabalhava no Detran quando encontrou uma
-                cachorrinha em estado crítico: magra, sem pelos e sofrendo
-                de sarna e infecções. Seu marido disse: "Leva ela, você cuida
-                e depois vê o que faz". Esse foi o começo de uma vida dedicada
-                ao resgate animal.
+                Hoje, mantemos um abrigo no bairro <strong>Caonze</strong> e acolhemos cerca de <strong>40 animais</strong>, 
+                enfrentando diariamente os custos com <strong>alimentação, produtos de higiene, medicamentos de alto custo 
+                e tratamentos veterinários prolongados</strong> — como o combate à grave <strong>doença do carrapato</strong>.
+            </p>
+
+            <p>
+                O trabalho vai muito além do resgate: envolve <strong>alimentação diária, vacinação, castração, reabilitação 
+                e a busca por uma adoção responsável</strong>. Cada doação de ração, remédio ou material de limpeza representa 
+                uma <strong>ajuda vital</strong> para mantermos essa rede de solidariedade viva e digna.
+            </p>
+
+            <p style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 0.95rem; color: #555;">
+                👇 <strong>Continue navegando abaixo</strong> para conhecer em detalhes toda a nossa trajetória de dedicação, 
+                entender o impacto do nosso projeto alinhado ao <strong>ODS 12</strong> e descobrir como você pode nos ajudar a 
+                transformar ainda mais vidas!
             </p>
         </div>
     </div>
+</section>
+
+<section id="animais" class="conteudo-texto">
+    <h2>Sobre os Animais: Cuidar, Proteger e Transformar Vidas</h2>
+    <p style="margin-bottom: 25px; color: #666;">Clique nos tópicos abaixo para expandir e ler os detalhes sobre a nossa rotina, desafios e histórias:</p>
+
+    <details open>
+        <summary>🐾 Uma história de amor e dedicação à causa animal</summary>
+        <p>
+            A proteção animal é uma missão que exige <strong>amor, responsabilidade, dedicação e muita perseverança</strong>. Por trás de cada animal resgatado existe uma história, muitas vezes marcada pelo <strong>abandono, pelo medo, pela fome e pela falta de cuidados</strong>. É nesse cenário que o trabalho dos protetores independentes se torna tão importante, oferecendo a esses animais uma oportunidade de receber <strong>carinho, tratamento e uma nova chance de viver com dignidade</strong>.
+        </p>
+        <p>
+            Há <strong>mais de 20 anos</strong>, nossa história está ligada à luta pela proteção dos animais. Tudo começou com o resgate de uma cachorrinha encontrada em condições precárias, debilitada e precisando de cuidados. O que inicialmente parecia ser apenas uma atitude de compaixão se transformou em um <strong>compromisso para a vida inteira</strong>. A partir daquele primeiro resgate, outros animais foram chegando, e o desejo de ajudar se tornou cada vez mais forte.
+        </p>
+    </details>
+
+    <details>
+        <summary>🏡 O cuidado diário e a realidade dos animais acolhidos</summary>
+        <p>
+            Atualmente, o trabalho envolve <strong>aproximadamente 40 animais</strong>, que precisam de atenção e cuidados todos os dias. A rotina inclui garantir alimentação, manter os espaços limpos, observar as condições de saúde e proporcionar um <strong>ambiente seguro e acolhedor</strong>. Cada animal tem suas próprias necessidades, e muitos chegam precisando de atenção especial por causa das condições em que viviam antes do resgate.
+        </p>
+        <p>
+            A <strong>alimentação</strong> é uma das necessidades mais constantes e também um dos maiores desafios. A ração é utilizada diariamente, e os gastos aumentam conforme cresce o número de animais acolhidos. Por isso, <strong>toda doação de ração é bem-vinda</strong>, independentemente da marca ou do valor.
+        </p>
+        <p>
+            Além da ração, também são necessários <strong>produtos de limpeza, itens de higiene, xampus, sachês e alimentos adequados para filhotes e animais idosos</strong>. Os <strong>cuidados com a saúde</strong> representam um desafio significativo devido a <strong>doenças transmitidas por carrapatos</strong> e outras enfermidades de alto custo.
+        </p>
+    </details>
+
+    <details>
+        <summary>❤️ A história da Orelhuda: uma nova chance de viver</summary>
+        <p>
+            Entre as histórias marcantes vividas pela protetora está a de uma cachorrinha chamada <strong>Orelhuda</strong>. Ela foi encontrada em uma situação de vulnerabilidade, próxima ao lixo e em uma área de risco, onde poderia sofrer um acidente ao tentar atravessar a pista.
+        </p>
+        <p>
+            Com a ajuda de um morador, foi possível organizar o resgate. Quando finalmente foi encontrada, Orelhuda estava muito magrinha e enfrentou uma etapa difícil marcada por tratamentos contra <strong>doença do carrapato e TVT (tumor venéreo transmissível)</strong>.
+        </p>
+        <p>
+            Apesar das dificuldades, Orelhuda recebeu tratamento, foi <strong>castrada, vacinada e adotada por uma família maravilhosa</strong> que lhe proporcionou passeios, viagens e muito carinho. Histórias como a dela mostram que <strong>o resgate se completa quando existe a possibilidade de recuperação e adoção responsável</strong>.
+        </p>
+    </details>
+
+    <details>
+        <summary>🤝 Adoção responsável e os desafios dos protetores</summary>
+        <p>
+            Adotar um animal significa assumir uma responsabilidade que vai muito além de oferecer um lugar para ele morar. É necessário compreender que cães e gatos precisam de <strong>alimentação adequada, água limpa, ambiente seguro, cuidados veterinários, vacinação, higiene, atenção e carinho durante toda a vida</strong>.
+        </p>
+        <p>
+            A realidade dos protetores independentes envolve muitos desafios financeiros com <strong>alimentação, limpeza, medicamentos e atendimento veterinário</strong>. Por esse motivo, a proteção animal precisa ser entendida como uma <strong>responsabilidade compartilhada</strong> com o apoio da comunidade.
+        </p>
+    </details>
+
+    <details>
+        <summary>💻 Tecnologia e solidariedade a favor da proteção animal</summary>
+        <p>
+            O desenvolvimento deste site faz parte de uma iniciativa que busca utilizar a <strong>tecnologia para aproximar a comunidade da causa animal</strong>. Por meio de um espaço digital, a divulgação de informações e a organização das doações tornam-se mais acessíveis.
+        </p>
+        <p>
+            A proposta também se relaciona à <strong>TI Verde</strong> ao incentivar o <strong>uso consciente dos recursos digitais</strong> para apoiar uma ação social, transformando a intenção de ajudar em uma oportunidade concreta de colaboração.
+        </p>
+    </details>
+</section>
+
+<section id="ods12" class="conteudo-texto">
+    <h2>ODS 12: Consumo e Produção Responsáveis</h2>
+    <p>
+        O <strong>ODS 12 da ONU</strong> busca assegurar padrões de consumo e produção sustentáveis, incentivando o <strong>uso consciente de recursos, o combate ao desperdício e a mudança de comportamento</strong> da sociedade frente ao consumo de bens e seres vivos.
+    </p>
+
+    <h3>Como Nosso Site e as Doações Contribuem para o ODS 12?</h3>
+    <p>
+        Apoiar ONGs e protetores de proteção animal por meio de <strong>doações direcionadas de ração, medicamentos e materiais essenciais</strong> é uma prática direta de <strong>consumo consciente e responsabilidade social</strong>:
+    </p>
+
+    <ul>
+        <li>
+            <strong>Combate à "Mercantilização" e Posse Responsável:</strong> Animais não são produtos descartáveis. Incentivar o cuidado, a adoção e o suporte às ONGs promove a conscientização de que a posse de um animal exige <strong>compromisso contínuo</strong>, reduzindo o abandono e o consumo por impulso.
+        </li>
+        <li>
+            <strong>Redirecionamento Consciente e Reciclagem de Recursos:</strong> Materiais como <strong>mantas, jornais, bacias, caixas de transporte, coleiras e remédios dentro da validade</strong> (que muitas vezes ficariam sem uso nas casas das pessoas) ganham vida útil e destino nobre nos abrigos, evitando o lixo e o desperdício.
+        </li>
+        <li>
+            <strong>Garantia de Nutrição e Dignidade:</strong> A doação de ração supre a necessidade mais urgente e dispendiosa das ONGs. Com a alimentação garantida de forma contínua e responsável, os abrigos conseguem redirecionar seus poucos recursos financeiros para <strong>tratamentos médicos, castrações e melhorias estruturais</strong>.
+        </li>
+        <li>
+            <strong>Consumo Solidário:</strong> Ao canalizar doações para instituições sérias, transformamos a intenção de ajudar em um <strong>fluxo organizado e sustentável de insumos essenciais</strong>, fortalecendo uma rede de apoio comunitário e responsável.
+        </li>
+    </ul>
 </section>
 
 <section id="doacao">
     <h2>Faça sua doação</h2>
 
     <p>
-        Manter um abrigo com dezenas de animais resgatados exige muito
-        esforço diário. Toda ajuda é bem-vinda!
+        Manter um abrigo com <strong>dezenas de animais resgatados</strong> exige muito
+        esforço diário. <strong>Toda ajuda é bem-vinda!</strong>
     </p>
 
     <h3>Como você pode ajudar:</h3>
     <ul>
-        <li><strong>Ração:</strong> aceitamos diferentes tipos de ração.</li>
-        <li><strong>Medicamentos e vacinas:</strong> precisamos de ajuda
-            para cuidar da saúde dos animais.</li>
-        <li><strong>Limpeza e higiene:</strong> materiais para manter
-            o ambiente limpo também são necessários.</li>
+        <li><strong>Ração:</strong> Aceitamos diferentes tipos e marcas de ração para cães e gatos.</li>
+        <li><strong>Medicamentos e vacinas:</strong> Precisamos de ajuda contínua para cuidar da saúde dos animais.</li>
+        <li><strong>Limpeza e higiene:</strong> Materiais como desinfetantes, xampus e sabões para manter o ambiente limpo.</li>
     </ul>
 
     <div class="container-doacao">
@@ -396,23 +536,6 @@
     </div>
 </section>
 
-<section id="animais">
-    <h2>Sobre os Animais e Rotina</h2>
-    <p>
-        A rotina do abrigo no Caonze começa cedo, com a alimentação e higiene
-        dos animais resgatados. Os filhotes recebem cuidados veterinários,
-        vacinação e acompanhamento.
-    </p>
-</section>
-
-<section id="ods">
-    <h2>ODS 9 - Indústria, Inovação e Infraestrutura</h2>
-    <p>
-        Este projeto utiliza tecnologia para conectar doadores e protetores,
-        facilitando a gestão de doações e de insumos para a saúde animal.
-    </p>
-</section>
-
 <section id="contatos">
     <h2>Contatos</h2>
 
@@ -422,8 +545,8 @@
     <a href="https://github.com/JoaoPauloAlvees"
        target="_blank" rel="noopener noreferrer">GitHub</a>
 
-    <p>Email: Joao.alvenne@gmail.com</p>
-    <p>Telefone: (21) 98198-4075</p>
+    <p>Email: <strong>Joao.alvenne@gmail.com</strong></p>
+    <p>Telefone: <strong>(21) 98198-4075</strong></p>
 
     <hr style="border:0; border-top:1px solid #ccc; margin:20px 0;">
 
@@ -433,8 +556,8 @@
     <a href="https://github.com/fernandocruzbjj"
        target="_blank" rel="noopener noreferrer">GitHub</a>
 
-    <p>Email: fernandocruzbjj@gmail.com</p>
-    <p>Telefone: (21) 99032-5225</p>
+    <p>Email: <strong>fernandocruzbjj@gmail.com</strong></p>
+    <p>Telefone: <strong>(21) 99032-5225</strong></p>
 </section>
 
 <script>
@@ -535,7 +658,6 @@ async function carregarDoacoes() {
             const badge = document.createElement('span');
             badge.className = 'badge-status';
 
-            // Considera as duas grafias de "Concluída"
             const concluida = ['Concluída', 'Concluida'].includes(
                 (doacao.status || '').trim()
             );
@@ -549,7 +671,6 @@ async function carregarDoacoes() {
 
             const colunaAcoes = document.createElement('td');
 
-            // Só mostra os botões se a doação ainda não foi concluída
             if (!concluida) {
                 const botaoConcluir = document.createElement('button');
                 botaoConcluir.type = 'button';
