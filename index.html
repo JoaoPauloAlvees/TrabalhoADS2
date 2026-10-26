@@ -19,18 +19,18 @@
             color: #2B2D42;
         }
 
-        /* MENU SUPERIOR OTIMIZADO PARA CELULAR E DESKTOP */
+        /* MENU FIXO IGUAL AO PC, SEM ROLAGEM */
         .menu-superior {
-     display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        background-color: #E07A5F;
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        flex-wrap: wrap;
-        gap: 10px;}
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 10px;
+            background-color: #E07A5F;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+        }
 
         .menu-superior a {
             text-decoration: none;
@@ -274,23 +274,16 @@
             color: #4a4d6d;
         }
 
-        /* AJUSTE ESPECÍFICO PARA DISPOSITIVOS MÓVEIS (CELULAR) */
+        /* AJUSTE PARA O MENU CABER NO CELULAR SEM Rolar (FONTE REDUZIDA) */
         @media (max-width: 768px) {
             .menu-superior {
-                justify-content: flex-start;
-                flex-wrap: nowrap;
-                overflow-x: auto;
-                padding: 12px 10px;
-                -webkit-overflow-scrolling: touch;
-            }
-            .menu-superior::-webkit-scrollbar {
-                display: none; /* Oculta a barra de rolagem no celular para ficar limpo */
+                justify-content: space-around;
+                padding: 8px 4px;
             }
             .menu-superior a {
-                font-size: 0.85rem;
-                padding: 4px 8px;
-                background: rgba(255, 255, 255, 0.2);
-                border-radius: 4px;
+                font-size: 0.62rem; /* Letra menor para encaixar tudo */
+                padding: 2px 3px;
+                letter-spacing: -0.2px;
             }
 
             .bloco-conteudo {
@@ -814,7 +807,7 @@ async function atualizarStatus(id) {
     }
 }
 
-/* EXCLUIR DOAÇÃO */
+// EXCLUIR DOAÇÃO
 async function excluirDoacao(id) {
     if (!confirm('Tem certeza de que deseja excluir esta doação?')) {
         return;
