@@ -33,9 +33,13 @@ O banco de dados relacional foi estruturado com as seguintes tabelas principais:
 ---
 
 ## 👥 Equipe de Desenvolvimento
-* **João Paulo Alves de Souza** — Aluno de ADS / Desenvolvedor Front-end & Banco de Dados
-* **Fernando Cruz** — Aluno de ADS / Desenvolvedor & Apoio de Campo
+João Paulo Alves de Souza
 
+Maria Júlia Da Silva Mesquita:
+
+Marcus Vinícius Ribeiro da Silva Santos
+
+Luiz Octávio Vilela Ramos
 ---
 
 ## 🏫 Instituição
